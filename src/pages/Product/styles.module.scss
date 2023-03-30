@@ -1,0 +1,55 @@
+#container {
+  width: auto;
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+
+  form {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 1rem;
+  }
+
+  input {
+    width: 100%;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--color-background);
+    padding: 1rem;
+  }
+
+  select {
+    width: 100%;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--color-background);
+    padding: 1rem;
+  }
+
+  textarea {
+    min-height: 5rem;
+    max-height: 10rem;
+    resize: vertical;
+  }
+
+  .button {
+    width: 100%;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--color-primary);
+    color: white;
+    padding: 1rem;
+
+    font-size: large;
+    font-weight: 500;
+  }
+
+  .radio {
+    color: gray;
+  }
+}
+
+.list {
+  margin-top: 2rem;
+  color: black;
+}
