@@ -1,11 +1,12 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import styles from "./styles.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { normalizeDate } from "../../masks";
 
 type FormValues = {
   nome: string;
   descricao: string;
-  preco: number;
+  preco: string;
   estoque: number;
   categoria: string;
   dtCompra: string;
@@ -16,12 +17,28 @@ type FormValues = {
 
 export function ProductPage() {
   const [productList, setProductList] = useState([] as FormValues[]);
-  const { register, handleSubmit } = useForm<FormValues>();
+  const { register, handleSubmit, watch, setValue } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log(data);
     setProductList((value) => [...value, data]);
   };
+
+  const dtCompraValue = watch("dtCompra");
+  const dtModValue = watch("dtMod");
+  const dtValidadeValue = watch("DataValidade");
+
+  useEffect(() => {
+    setValue("dtCompra", normalizeDate(dtCompraValue));
+  }, [dtCompraValue]);
+
+  useEffect(() => {
+    setValue("dtMod", normalizeDate(dtModValue));
+  }, [dtModValue]);
+
+  useEffect(() => {
+    setValue("DataValidade", normalizeDate(dtValidadeValue));
+  }, [dtValidadeValue]);
 
   return (
     <div id={styles.container}>
@@ -34,7 +51,7 @@ export function ProductPage() {
         <textarea
           {...register("descricao", { required: true, min: 5, maxLength: 100 })}
         />
-        <input type="number" placeholder="Preço" {...register("preco", {})} />
+        <input type="string" placeholder="Preço" {...register("preco", {})} />
         <input
           type="number"
           placeholder="Estoque"
@@ -49,19 +66,31 @@ export function ProductPage() {
         <input
           type="datetime"
           placeholder="Data de compra"
-          {...register("dtCompra", { required: true })}
+          {...register("dtCompra", {
+            required: true,
+            maxLength: 8,
+            minLength: 10,
+          })}
         />
 
         <input
           type="datetime"
           placeholder="Data da ultima modificação"
-          {...register("dtMod", { required: true })}
+          {...register("dtMod", {
+            required: true,
+            maxLength: 8,
+            minLength: 10,
+          })}
         />
 
         <input
           type="datetime"
           placeholder="Data de validade"
-          {...register("DataValidade", { required: true })}
+          {...register("DataValidade", {
+            required: true,
+            maxLength: 8,
+            minLength: 10,
+          })}
         />
 
         <input
@@ -84,4 +113,7 @@ export function ProductPage() {
       </div>
     </div>
   );
+}
+function setValue(arg0: string, arg1: any) {
+  throw new Error("Function not implemented.");
 }
